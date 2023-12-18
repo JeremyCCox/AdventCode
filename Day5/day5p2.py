@@ -1,6 +1,6 @@
 import datetime
 
-file = open("practiceInput")
+file = open("day5input")
 fileArr = []
 mapInf = [[]]
 mapInfCount = 0
