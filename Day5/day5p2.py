@@ -1,8 +1,19 @@
-file = open("day5input")
+import datetime
+
+file = open("practiceInput")
 fileArr = []
 mapInf = [[]]
 mapInfCount = 0
 
+
+def log(message):
+    logfile = open("logfile.txt","a")
+    logfile.write(str(datetime.datetime.now())+" LOG: "+message+"\n")
+    print(str(datetime.datetime.now())+" LOG: "+str(message)+"\n")
+    logfile.close()
+
+
+log("Program Running! \n")
 
 def sortRules(e):
     return e[1]
@@ -48,7 +59,7 @@ seedPairs.sort(key=sortSmallest)
 print(seedPairs)
 
 condensedPairs = [[seedPairs[0][0], seedPairs[0][0] + seedPairs[0][1]]]
-print(len(condensedPairs))
+# print(len(condensedPairs))
 condensedCount = 0
 # def condensePairs(start,rnge):
 #     if condensedPairs[condensedCount][1] >= start:
@@ -80,41 +91,50 @@ def mapRange(seed, mapData):
     return seed
 
 
+lowestVals = []
+
 for seedPair in condensedPairs:
-    print((iterCount / len(seedPairs) * 100), "% Completed!")
+    log(str((iterCount / len(seedPairs) * 100))+"% Completed!")
 
     seedRange = list(range(seedPair[0], seedPair[1]))
     seedFile = open("seedFile-" + str(iterCount), "w")
     seedLocations = []
     for seed in seedRange:
-        seedFile.write(str(
-            mapRange(  # Humidity To location
-                mapRange(  # Temp to Humidity
-                    mapRange(  # Light to Temp
-                        mapRange(  # Water to Light
-                            mapRange(  # Fertilizer to Water
-                                mapRange(  # Soil to Fertilizer
-                                    mapRange(  # Seed to Soil
-                                        int(seed)
-                                        ,
-                                        mapInf[1])
+        seedLocation = mapRange(  # Humidity To location
+            mapRange(  # Temp to Humidity
+                mapRange(  # Light to Temp
+                    mapRange(  # Water to Light
+                        mapRange(  # Fertilizer to Water
+                            mapRange(  # Soil to Fertilizer
+                                mapRange(  # Seed to Soil
+                                    int(seed)
                                     ,
-                                    mapInf[2])
+                                    mapInf[1])
                                 ,
-                                mapInf[3])
+                                mapInf[2])
                             ,
-                            mapInf[4])
+                            mapInf[3])
                         ,
-                        mapInf[5])
+                        mapInf[4])
                     ,
-                    mapInf[6])
+                    mapInf[5])
                 ,
-                mapInf[7])
-        ) + ",")
+                mapInf[6])
+            ,
+            mapInf[7])# seedFile.write(str(
+        seedLocations.append(seedLocation)
+        seedFile.write(str(seedLocation)+"\n")
+        # ) + ",")
     iterCount += 1
+    seedLocations.sort()
+    log("Lowest was "+str(seedLocations[0]))
+    lowestVals.append(seedLocations[0])
     seedFile.close()
-locations.sort()
-for loc in locations:
-    print(loc)
+
+lowestVals.sort()
+
+log("Overall Lowest was "+str(lowestVals[0]))
+log("Program Finished Running! \n")
+
 
 # mapRange(98,0,98,2)
