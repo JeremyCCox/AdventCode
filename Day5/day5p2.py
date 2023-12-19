@@ -34,7 +34,7 @@ for inf in mapInf[1:len(mapInf)]:
     for val in inf[1:len(inf)]:
         vals = val.split(" ")
         newArr.append([int(vals[0]), int(vals[1]), int(vals[2])+int(vals[1])])
-    newArr.sort(key=sortRules, reverse=True)
+    # newArr.sort(key=sortRules, reverse=True)
     newArr.insert(0, inf[0])
     mapInf[mapInfCount] = newArr
     mapInfCount += 1
