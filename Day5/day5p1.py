@@ -10,16 +10,35 @@ for line in file:
     else:
         item = mapInf[mapInfCount]
         mapInf[mapInfCount].append(line.strip())
+
+
+def sortRules(e):
+    return e[1]
+
+
+
+mapInfCount = 1
+for inf in mapInf[1:len(mapInf)]:
+    # print(inf)
+    newArr = []
+    for val in inf[1:len(inf)]:
+        vals = val.split(" ")
+        newArr.append([int(vals[0]), int(vals[1]), int(vals[2])])
+    newArr.sort(key=sortRules, reverse=True)
+    newArr.insert(0, inf[0])
+    mapInf[mapInfCount] = newArr
+    mapInfCount += 1
+
 def mapRange(seed,mapData):
     print(mapData[0],seed)
     seed = int(seed)
     lower = seed
     for inf in mapData[1:len(mapData)]:
-        print(inf,"|",seed)
-        infArr = inf.split(" ")
-        dest = int(infArr[0])
-        source = int(infArr[1])
-        quant = int(infArr[2])
+        # print(inf,"|",seed)
+        # infArr = inf.split(" ")
+        dest = int(inf[0])
+        source = int(inf[1])
+        quant = int(inf[2])
         if seed >= source:
             if seed <= source+quant:
                 # print(((dest+quant)-(source+quant-seed)))

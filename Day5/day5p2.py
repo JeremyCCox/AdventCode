@@ -1,6 +1,6 @@
 import datetime
 
-file = open("day5input")
+file = open("practiceInput")
 fileArr = []
 mapInf = [[]]
 mapInfCount = 0
@@ -33,7 +33,7 @@ for inf in mapInf[1:len(mapInf)]:
     newArr = []
     for val in inf[1:len(inf)]:
         vals = val.split(" ")
-        newArr.append([int(vals[0]), int(vals[1]), int(vals[2])])
+        newArr.append([int(vals[0]), int(vals[1]), int(vals[2])+int(vals[1])])
     newArr.sort(key=sortRules, reverse=True)
     newArr.insert(0, inf[0])
     mapInf[mapInfCount] = newArr
@@ -82,11 +82,10 @@ seeds = []
 locations = []
 iterCount = 0
 
-
 def mapRange(seed, mapData):
     for inf in mapData[1:len(mapData)]:
-        if seed >= inf[1] <= inf[1] + inf[2]:
-            if seed <= inf[1] + inf[2]:
+        if seed >= inf[1]:
+            if seed <= inf[2]:
                 return inf[0] - (inf[1] - seed)
     return seed
 
@@ -95,11 +94,12 @@ lowestVals = []
 
 for seedPair in condensedPairs:
     log(str((iterCount / len(seedPairs) * 100))+"% Completed!")
-
+    lowestLocation = seedPair[0]*seedPair[1]
     seedRange = list(range(seedPair[0], seedPair[1]))
-    seedFile = open("seedFile-" + str(iterCount), "w")
-    seedLocations = []
-    for seed in seedRange:
+    seed = seedPair[0]
+    seedMax = seedPair[1]-1
+    while seed < seedMax:
+    # for seed in seedRange:
         seedLocation = mapRange(  # Humidity To location
             mapRange(  # Temp to Humidity
                 mapRange(  # Light to Temp
@@ -122,18 +122,21 @@ for seedPair in condensedPairs:
                 mapInf[6])
             ,
             mapInf[7])# seedFile.write(str(
-        seedLocations.append(seedLocation)
-        seedFile.write(str(seedLocation)+"\n")
+        if seedLocation < lowestLocation:
+            lowestLocation = seedLocation
+        seed += 1
         # ) + ",")
     iterCount += 1
-    seedLocations.sort()
-    log("Lowest was "+str(seedLocations[0]))
-    lowestVals.append(seedLocations[0])
-    seedFile.close()
+    log("Lowest was "+str(lowestLocation))
+    lowestVals.append(lowestLocation)
+    # seedFile.close()
 
 lowestVals.sort()
 
 log("Overall Lowest was "+str(lowestVals[0]))
+log("All Lower Values are:")
+for val in lowestVals:
+    log("Val " + str(val))
 log("Program Finished Running! \n")
 
 
