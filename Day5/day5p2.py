@@ -68,6 +68,9 @@ condensedCount = 0
 #     else:
 #         condensedPairs.append([start,start+range])
 #         condensedCount+= 1
+
+
+
 for pair in seedPairs:
     if condensedPairs[condensedCount][1] >= pair[0]:
         if condensedPairs[condensedCount][1] < (pair[0] + pair[1]):
@@ -77,6 +80,10 @@ for pair in seedPairs:
         condensedCount += 1
 
 print(condensedPairs)
+
+seedPairs = []
+almanacList=[]
+
 
 seeds = []
 locations = []
@@ -93,9 +100,9 @@ def mapRange(seed, mapData):
 lowestVals = []
 
 for seedPair in condensedPairs:
-    log(str((iterCount / len(seedPairs) * 100))+"% Completed!")
+    log(str((iterCount / len(condensedPairs) * 100))+"% Completed!")
     lowestLocation = seedPair[0]*seedPair[1]
-    seedRange = list(range(seedPair[0], seedPair[1]))
+    # seedRange = list(range(seedPair[0], seedPair[1]))
     seed = seedPair[0]
     seedMax = seedPair[1]-1
     while seed < seedMax:
